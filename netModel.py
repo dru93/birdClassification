@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 '''
 - Sequential neural network model
 '''
@@ -10,6 +12,8 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
 from keras.optimizers import Adadelta
+import matplotlib.pyplot as plt
+from keras.utils import plot_model
 
 # keep original directory
 originalDir = os.getcwd()
@@ -52,7 +56,30 @@ model.add(Activation('softmax'))
 model.compile(loss = 'categorical_crossentropy', metrics = ['accuracy'], optimizer = 'Adadelta')
 
 # model training
-model.fit(X_train, y_train, batch_size = 32, epochs = 20, validation_data = (X_test, y_test))
+history = model.fit(X, y, validation_split = 0.3, epochs = 200, batch_size = 128, verbose = 1)
+
+# save and plot model
+model.save('model')
+plot_model(model, to_file='model.png')
+# Plot training & validation accuracy values
+plt.figure()
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('accuracy.png')
+
+# Plot training & validation loss values
+plt.figure()
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('Model-loss.png')
 
 # return to original directory
 os.chdir(originalDir)
