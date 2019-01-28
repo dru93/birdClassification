@@ -1,5 +1,3 @@
-import matplotlib
-matplotlib.use('Agg')
 '''
 - Sequential neural network model
 '''
@@ -27,15 +25,11 @@ path = 'Results/'
 os.chdir(path)
 
 # load features and labels
-X = np.load('features10k.npy')
-y = np.load('labels10k.npy')
+X = np.load('features.npy')
+y = np.load('labels.npy')
 
 lb = LabelEncoder()
 y = np_utils.to_categorical(lb.fit_transform(y))
-
-# split to train and test data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state = 7)
-
 
 num_labels = y.shape[1]
 
@@ -56,11 +50,11 @@ model.add(Activation('softmax'))
 model.compile(loss = 'categorical_crossentropy', metrics = ['accuracy'], optimizer = 'Adadelta')
 
 # model training
-history = model.fit(X, y, validation_split = 0.3, epochs = 200, batch_size = 128, verbose = 1)
+history = model.fit(X, y, validation_split = 0.3, epochs = 20, batch_size = 64, verbose = 1)
 
 # save and plot model
 model.save('model')
-plot_model(model, to_file='model.png')
+plot_model(model, to_file = 'model.png')
 # Plot training & validation accuracy values
 plt.figure()
 plt.plot(history.history['acc'])
@@ -68,7 +62,7 @@ plt.plot(history.history['val_acc'])
 plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
+plt.legend(['Train', 'Test'], loc = 'upper left')
 plt.savefig('accuracy.png')
 
 # Plot training & validation loss values
@@ -78,7 +72,7 @@ plt.plot(history.history['val_loss'])
 plt.title('Model loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
+plt.legend(['Train', 'Test'], loc = 'upper left')
 plt.savefig('Model-loss.png')
 
 # return to original directory
