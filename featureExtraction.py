@@ -25,7 +25,7 @@ os.chdir(path)
 my_data = np.matrix(np.genfromtxt('warblrb10k_public_metadata.csv', delimiter=',' , dtype=str , skip_header=1 ))
 
 # Set directory for wav files
-d = 'wavHP/'
+d = 'HP/'
 os.chdir(d)
 
 # Import wavs
