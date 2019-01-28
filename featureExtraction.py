@@ -29,15 +29,12 @@ d = 'HP/'
 os.chdir(d)
 
 # Import wavs
-l={}
 raw = []
 name = []
 dir_length=len(os.listdir(os.getcwd()))
 print('Importing wav files...')
 for filename in tqdm(os.listdir(os.getcwd())):
-    x, sr = librosa.load(filename)    
-    l[filename] = list()
-    l[filename].append(x)
+    x, sr = librosa.load(filename)
     raw.append(x)
     name.append(filename.split('.')[0])
 

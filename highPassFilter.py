@@ -26,9 +26,6 @@ else: # if directiory already exists, delete all files in it
 			os.unlink(os.path.join(root, f))
 
 # Import wavs
-l={}
-r = []
-name = []
 dir_length=len(os.listdir(os.getcwd()))
 print('\nHigh passing wav files...')
 for filename in tqdm(os.listdir(os.getcwd())):
